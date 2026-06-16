@@ -1,0 +1,127 @@
+services:
+  app:
+    build:
+      context: ./docker/php
+      args:
+        APP_UID: ${APP_UID:-1000}
+        APP_GID: ${APP_GID:-1000}
+    container_name: e-commerce-app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./e-commerce:/var/www/html
+    environment:
+      PHP_IDE_CONFIG: serverName=e-commerce
+      XDEBUG_MODE: ${XDEBUG_MODE:-off}
+      IDE_KEY: ${IDE_KEY:-e-commerce}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"   # needed on Linux; harmless on macOS
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - e-commerce-net
+
+  # Long-running queue worker. Reuses the PHP image so it shares the exact
+  # vendor/, php.ini and extension set the FPM container uses — guarantees
+  # the jobs behave identically to whatever code paths the HTTP request
+  # exercised, because they ARE the same code paths.
+  #
+  # We run `horizon` (already installed) so admins get the Horizon dashboard
+  # at /horizon for free, with auto-balancing across the `media`, `authors`
+  # and `downloads` queues that JobDispatcher targets.
+  worker:
+    build:
+      context: ./docker/php
+      args:
+        APP_UID: ${APP_UID:-1000}
+        APP_GID: ${APP_GID:-1000}
+    container_name: e-commerce-worker
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./e-commerce:/var/www/html
+    environment:
+      # Horizon respawns workers internally when it sees code changes via
+      # the `php artisan queue:restart` signal — no need for nodemon-style
+      # tooling. XDEBUG stays off for the worker by default; flip it on
+      # only if you specifically want to step through job code.
+      XDEBUG_MODE: ${WORKER_XDEBUG_MODE:-off}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    command: ["php", "artisan", "horizon"]
+    networks:
+      - e-commerce-net
+
+  web:
+    build:
+      context: ./docker/nginx
+    container_name: e-commerce-web
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8080}:80"
+    volumes:
+      - ./e-commerce:/var/www/html:ro
+    depends_on:
+      - app
+    networks:
+      - e-commerce-net
+
+  db:
+    image: mysql:8.4
+    container_name: e-commerce-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: ${DB_DATABASE:-e-commerce}
+      MYSQL_USER: ${DB_USERNAME:-e-commerce}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-secret}
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${DB_ROOT_PASSWORD:-root}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks:
+      - e-commerce-net
+
+  redis:
+    image: redis:7-alpine
+    container_name: e-commerce-redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - e-commerce-net
+
+  node:
+    image: node:22-alpine
+    container_name: e-commerce-node
+    working_dir: /var/www/html
+    volumes:
+      - ./e-commerce:/var/www/html
+    ports:
+      - "${VITE_PORT:-5173}:5173"
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    profiles: ["dev"]
+    networks:
+      - e-commerce-net
+
+volumes:
+  db-data:
+  redis-data:
+
+networks:
+  e-commerce-net:
+    driver: bridge

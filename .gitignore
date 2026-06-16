@@ -1,0 +1,25 @@
+e-commerce/vendor/
+e-commerce/node_modules/
+e-commerce/.env
+e-commerce/storage/app/private/*
+!e-commerce/storage/app/private/.gitkeep
+e-commerce/storage/framework/cache/data/*
+e-commerce/storage/framework/sessions/*
+e-commerce/storage/framework/views/*
+e-commerce/storage/logs/*
+e-commerce/public/build/
+e-commerce/public/hot
+.env
+.env.local
+.env.*.local
+
+# IDE
+Thumbs.db
+*.swp
+.idea/
+.DS_Store
+
+# Claude AI files
+.superpowers/
+docs/
+CLAUDE.md
