@@ -7,12 +7,12 @@ use App\Domains\Auth\Services\AuthService;
 use App\Domains\Cart\Repositories\CartRepository;
 use App\Domains\Cart\Services\CartService;
 use App\Domains\Catalog\Models\Product;
-use App\Domains\Orders\Repositories\OrderRepository;
-use App\Domains\Orders\Services\OrderService;
 use App\Domains\Catalog\Policies\ProductPolicy;
 use App\Domains\Catalog\Repositories\CategoryRepository;
 use App\Domains\Catalog\Repositories\ProductRepository;
 use App\Domains\Catalog\Services\ProductService;
+use App\Domains\Orders\Repositories\OrderRepository;
+use App\Domains\Orders\Services\OrderService;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 

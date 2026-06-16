@@ -3,7 +3,6 @@
 namespace App\Domains\Catalog\Http\Controllers;
 
 use App\Domains\Catalog\Http\Requests\StoreProductRequest;
-use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Repositories\ProductRepository;
 use App\Domains\Catalog\Services\ProductService;
 use App\Http\Controllers\Controller;

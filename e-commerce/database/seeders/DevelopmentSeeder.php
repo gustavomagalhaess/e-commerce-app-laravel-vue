@@ -41,10 +41,10 @@ class DevelopmentSeeder extends Seeder
         foreach ($users as $user) {
             for ($i = 0; $i < 10; $i++) {
                 $order = Order::create([
-                    'buyer_id'       => $user->id,
+                    'buyer_id' => $user->id,
                     'payment_method' => fake()->randomElement(['credit_card', 'pix', 'boleto']),
-                    'status'         => fake()->randomElement(['pending', 'paid', 'cancelled', 'failed']),
-                    'total'          => 0,
+                    'status' => fake()->randomElement(['pending', 'paid', 'cancelled', 'failed']),
+                    'total' => 0,
                 ]);
 
                 $pickedProducts = $allProducts->random(rand(1, 3));
@@ -53,10 +53,10 @@ class DevelopmentSeeder extends Seeder
                 foreach ($pickedProducts as $product) {
                     $quantity = rand(1, 5);
                     OrderItem::create([
-                        'order_id'          => $order->id,
-                        'product_id'        => $product->id,
-                        'seller_id'         => $product->seller_id,
-                        'quantity'          => $quantity,
+                        'order_id' => $order->id,
+                        'product_id' => $product->id,
+                        'seller_id' => $product->seller_id,
+                        'quantity' => $quantity,
                         'price_at_purchase' => $product->price,
                     ]);
                     $total += $quantity * $product->price;
