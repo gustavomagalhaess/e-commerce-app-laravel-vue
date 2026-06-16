@@ -1,7 +1,6 @@
 name: Pint
 
 on:
-  push:
   pull_request:
 
 jobs:
