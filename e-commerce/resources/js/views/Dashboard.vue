@@ -7,13 +7,14 @@
         type="text"
         placeholder="Search products..."
         class="flex-1 border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-    </div>
 
-    <div v-if="categories.length" class="mb-6 flex flex-wrap gap-3">
-      <label v-for="cat in categories" :key="cat.id" class="flex items-center gap-1.5 cursor-pointer text-sm">
-        <input type="checkbox" :value="cat.id" v-model="selectedCategories" @change="fetchProducts(1)" />
-        {{ cat.name }}
-      </label>
+      <select
+        v-model="selectedCategory"
+        @change="fetchProducts(1)"
+        class="border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <option value="">All Categories</option>
+        <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.name }}</option>
+      </select>
     </div>
 
     <div v-if="loading" class="text-center py-16 text-gray-500">Loading...</div>
@@ -37,7 +38,7 @@ const products = ref([])
 const categories = ref([])
 const meta = ref(null)
 const search = ref('')
-const selectedCategories = ref([])
+const selectedCategory = ref('')
 const loading = ref(false)
 
 let debounceTimer = null
@@ -51,7 +52,7 @@ async function fetchProducts(page = 1) {
   try {
     const params = { page }
     if (search.value) params.search = search.value
-    if (selectedCategories.value.length) params.category = selectedCategories.value
+    if (selectedCategory.value) params.category = [selectedCategory.value]
     const { data } = await getProducts(params)
     products.value = data.data
     meta.value = data.meta

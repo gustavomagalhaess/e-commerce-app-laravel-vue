@@ -4,7 +4,7 @@
       <router-link to="/dashboard" class="text-xl font-semibold text-gray-900">ShopC2C</router-link>
 
       <div class="flex items-center gap-4 text-sm">
-        <router-link to="/dashboard" class="text-gray-600 hover:text-gray-900">Browse</router-link>
+        <router-link to="/dashboard" class="text-gray-600 hover:text-gray-900">Dashboard</router-link>
 
         <template v-if="authStore.isAuthenticated">
           <router-link to="/cart" class="relative text-gray-600 hover:text-gray-900">
