@@ -50,6 +50,9 @@ fi
 echo "==> Installing PHP dependencies (composer install)"
 $APP_RUN composer install --no-interaction --no-progress --prefer-dist
 
+echo "==> Creating e-commerce/.env from .env.example (if missing)"
+$APP_RUN sh -lc 'test -f .env || cp .env.example .env'
+
 echo "==> Generating APP_KEY (if missing)"
 $APP_RUN sh -lc 'grep -q "^APP_KEY=base64:" .env || php artisan key:generate'
 
