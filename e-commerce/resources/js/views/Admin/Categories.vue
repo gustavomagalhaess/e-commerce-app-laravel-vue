@@ -3,51 +3,44 @@
     <h1 class="text-2xl font-bold mb-6">Categories</h1>
 
     <form @submit.prevent="handleCreate" class="flex gap-3 mb-6 bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-      <input v-model="newName" type="text" placeholder="Category name" required
-        class="flex-1 border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-      <input v-model="newSlug" type="text" placeholder="category-slug" required
-        class="flex-1 border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-      <button type="submit" :disabled="creating"
-        class="bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 font-medium">
+      <input v-model="newName" type="text" placeholder="Category name" required class="input flex-1" />
+      <input v-model="newSlug" type="text" placeholder="category-slug" required class="input flex-1" />
+      <button type="submit" :disabled="creating" class="btn-primary">
         {{ creating ? 'Adding...' : 'Add' }}
       </button>
     </form>
     <p v-if="createError" class="text-red-600 text-sm mb-4">{{ createError }}</p>
 
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div class="table-wrap">
       <table class="w-full text-sm">
         <thead class="bg-gray-50 border-b border-gray-200">
           <tr>
-            <th class="text-left px-4 py-3 font-medium text-gray-700">Name</th>
-            <th class="text-left px-4 py-3 font-medium text-gray-700">Slug</th>
+            <th class="th">Name</th>
+            <th class="th">Slug</th>
             <th class="px-4 py-3 w-40"></th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="cat in categories" :key="cat.id" class="border-b border-gray-100">
-            <td class="px-4 py-3">
+            <td class="td">
               <input v-if="editing?.id === cat.id" v-model="editing.name"
                 class="border border-gray-300 rounded-md px-2 py-1 text-sm w-full" />
               <span v-else>{{ cat.name }}</span>
             </td>
-            <td class="px-4 py-3">
+            <td class="td">
               <input v-if="editing?.id === cat.id" v-model="editing.slug"
                 class="border border-gray-300 rounded-md px-2 py-1 text-sm w-full" />
               <span v-else class="text-gray-500">{{ cat.slug }}</span>
             </td>
-            <td class="px-4 py-3">
+            <td class="td">
               <div class="flex gap-2 justify-end">
                 <template v-if="editing?.id === cat.id">
-                  <button @click="handleUpdate"
-                    class="text-xs bg-blue-100 text-blue-700 px-2.5 py-1 rounded hover:bg-blue-200">Save</button>
-                  <button @click="editing = null"
-                    class="text-xs bg-gray-100 px-2.5 py-1 rounded hover:bg-gray-200">Cancel</button>
+                  <button @click="handleUpdate" class="btn-xs btn-xs-blue">Save</button>
+                  <button @click="editing = null" class="btn-xs btn-xs-gray">Cancel</button>
                 </template>
                 <template v-else>
-                  <button @click="editing = { ...cat }"
-                    class="text-xs bg-gray-100 text-gray-700 px-2.5 py-1 rounded hover:bg-gray-200">Edit</button>
-                  <button @click="handleDelete(cat)"
-                    class="text-xs bg-red-100 text-red-700 px-2.5 py-1 rounded hover:bg-red-200">Delete</button>
+                  <button @click="editing = { ...cat }" class="btn-xs btn-xs-gray">Edit</button>
+                  <button @click="handleDelete(cat)" class="btn-xs btn-xs-red">Delete</button>
                 </template>
               </div>
             </td>
@@ -107,3 +100,43 @@ async function handleDelete(cat) {
 
 onMounted(load)
 </script>
+
+<style scoped>
+@reference "../../../css/app.css";
+
+.input {
+  @apply border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+.btn-primary {
+  @apply bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 font-medium;
+}
+
+.table-wrap {
+  @apply bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden;
+}
+
+.th {
+  @apply text-left px-4 py-3 font-medium text-gray-700;
+}
+
+.td {
+  @apply px-4 py-3;
+}
+
+.btn-xs {
+  @apply text-xs px-2.5 py-1 rounded;
+}
+
+.btn-xs-blue {
+  @apply bg-blue-100 text-blue-700 hover:bg-blue-200;
+}
+
+.btn-xs-gray {
+  @apply bg-gray-100 text-gray-700 hover:bg-gray-200;
+}
+
+.btn-xs-red {
+  @apply bg-red-100 text-red-700 hover:bg-red-200;
+}
+</style>

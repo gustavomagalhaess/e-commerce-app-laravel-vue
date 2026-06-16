@@ -6,19 +6,19 @@
         @input="debouncedFetch"
         type="text"
         placeholder="Search products..."
-        class="flex-1 border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        class="form-control flex-1" />
 
       <select
         v-model="selectedCategory"
         @change="fetchProducts(1)"
-        class="border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        class="form-control">
         <option value="">All Categories</option>
         <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.name }}</option>
       </select>
     </div>
 
-    <div v-if="loading" class="text-center py-16 text-gray-500">Loading...</div>
-    <div v-else-if="products.length === 0" class="text-center py-16 text-gray-500">No products found.</div>
+    <div v-if="loading" class="state-message">Loading...</div>
+    <div v-else-if="products.length === 0" class="state-message">No products found.</div>
     <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       <ProductCard v-for="product in products" :key="product.id" :product="product" />
     </div>
@@ -66,3 +66,15 @@ onMounted(async () => {
   categories.value = catRes.data.data
 })
 </script>
+
+<style scoped>
+@reference "../../css/app.css";
+
+.form-control {
+  @apply border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+.state-message {
+  @apply text-center py-16 text-gray-500;
+}
+</style>

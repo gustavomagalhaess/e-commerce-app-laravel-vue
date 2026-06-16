@@ -10,7 +10,7 @@
       </span>
     </div>
 
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5 mb-4">
+    <div class="card mb-4">
       <div class="grid grid-cols-2 gap-4 text-sm">
         <div>
           <p class="text-gray-500">Payment Method</p>
@@ -23,7 +23,7 @@
       </div>
     </div>
 
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
+    <div class="card">
       <h2 class="font-semibold text-gray-900 mb-4">Items</h2>
       <div class="space-y-3">
         <div v-for="item in order.items" :key="item.id"
@@ -49,7 +49,7 @@
       <router-link to="/orders" class="text-blue-600 hover:underline text-sm">← Back to orders</router-link>
     </div>
   </div>
-  <div v-else-if="loading" class="text-center py-16 text-gray-500">Loading...</div>
+  <div v-else-if="loading" class="state-message">Loading...</div>
 </template>
 
 <script setup>
@@ -80,3 +80,15 @@ onMounted(async () => {
   }
 })
 </script>
+
+<style scoped>
+@reference "../../../css/app.css";
+
+.state-message {
+  @apply text-center py-16 text-gray-500;
+}
+
+.card {
+  @apply bg-white rounded-lg shadow-sm border border-gray-200 p-5;
+}
+</style>

@@ -2,28 +2,28 @@
   <div>
     <h1 class="text-2xl font-bold mb-6">Users</h1>
 
-    <div v-if="loading" class="text-center py-16 text-gray-500">Loading...</div>
-    <div v-else class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div v-if="loading" class="state-message">Loading...</div>
+    <div v-else class="table-wrap">
       <table class="w-full text-sm">
         <thead class="bg-gray-50 border-b border-gray-200">
           <tr>
-            <th class="text-left px-4 py-3 font-medium text-gray-700">Name</th>
-            <th class="text-left px-4 py-3 font-medium text-gray-700">Email</th>
-            <th class="text-left px-4 py-3 font-medium text-gray-700">Role</th>
+            <th class="th">Name</th>
+            <th class="th">Email</th>
+            <th class="th">Role</th>
             <th class="px-4 py-3"></th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="user in users" :key="user.id" class="border-b border-gray-100 hover:bg-gray-50">
-            <td class="px-4 py-3 font-medium">{{ user.name }}</td>
-            <td class="px-4 py-3 text-gray-500">{{ user.email }}</td>
-            <td class="px-4 py-3">
+          <tr v-for="user in users" :key="user.id" class="tr">
+            <td class="td font-medium">{{ user.name }}</td>
+            <td class="td text-gray-500">{{ user.email }}</td>
+            <td class="td">
               <span :class="user.role === 'admin' ? 'bg-purple-100 text-purple-800' : 'bg-gray-100 text-gray-700'"
                 class="text-xs font-medium px-2.5 py-1 rounded-full capitalize">
                 {{ user.role }}
               </span>
             </td>
-            <td class="px-4 py-3 text-right">
+            <td class="td text-right">
               <button v-if="user.role !== 'admin'" @click="setRole(user, 'admin')"
                 class="text-xs bg-purple-100 text-purple-700 px-2.5 py-1 rounded hover:bg-purple-200 mr-1">
                 Make Admin
@@ -69,3 +69,27 @@ async function setRole(user, role) {
 
 onMounted(fetchUsers)
 </script>
+
+<style scoped>
+@reference "../../../css/app.css";
+
+.state-message {
+  @apply text-center py-16 text-gray-500;
+}
+
+.table-wrap {
+  @apply bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden;
+}
+
+.th {
+  @apply text-left px-4 py-3 font-medium text-gray-700;
+}
+
+.tr {
+  @apply border-b border-gray-100 hover:bg-gray-50;
+}
+
+.td {
+  @apply px-4 py-3;
+}
+</style>

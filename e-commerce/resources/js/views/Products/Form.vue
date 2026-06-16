@@ -4,25 +4,22 @@
 
     <form @submit.prevent="handleSubmit" class="space-y-5 bg-white p-6 rounded-lg shadow-sm border border-gray-200">
       <div>
-        <label class="block text-sm font-medium text-gray-700">Name</label>
-        <input v-model="form.name" type="text" required
-          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <label class="form-label">Name</label>
+        <input v-model="form.name" type="text" required class="input" />
       </div>
 
       <div>
-        <label class="block text-sm font-medium text-gray-700">Description</label>
-        <textarea v-model="form.description" required rows="4"
-          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+        <label class="form-label">Description</label>
+        <textarea v-model="form.description" required rows="4" class="input"></textarea>
       </div>
 
       <div>
-        <label class="block text-sm font-medium text-gray-700">Price (R$)</label>
-        <input v-model="form.price" type="number" step="0.01" min="0.01" required
-          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <label class="form-label">Price (R$)</label>
+        <input v-model="form.price" type="number" step="0.01" min="0.01" required class="input" />
       </div>
 
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Categories <span class="text-red-500">*</span></label>
+        <label class="form-label mb-2">Categories <span class="text-red-500">*</span></label>
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
           <label v-for="cat in categories" :key="cat.id" class="flex items-center gap-2 cursor-pointer text-sm">
             <input type="checkbox" :value="cat.id" v-model="form.category_ids" />
@@ -38,8 +35,7 @@
       </div>
 
       <div class="flex gap-3 pt-2">
-        <button type="submit" :disabled="loading"
-          class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 font-medium">
+        <button type="submit" :disabled="loading" class="btn-primary">
           {{ loading ? 'Saving...' : (isEdit ? 'Update Product' : 'Create Product') }}
         </button>
         <router-link to="/my-products" class="px-6 py-2 rounded-md border border-gray-300 hover:bg-gray-50 text-sm">
@@ -119,3 +115,19 @@ async function handleSubmit() {
   }
 }
 </script>
+
+<style scoped>
+@reference "../../../css/app.css";
+
+.form-label {
+  @apply block text-sm font-medium text-gray-700;
+}
+
+.input {
+  @apply mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+.btn-primary {
+  @apply bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 font-medium;
+}
+</style>

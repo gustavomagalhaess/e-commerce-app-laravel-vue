@@ -2,8 +2,8 @@
   <div>
     <label class="block text-sm font-medium text-gray-700 mb-2">Product Image</label>
     <div class="flex items-center gap-4">
-      <img v-if="preview" :src="preview" alt="Preview" class="w-24 h-24 object-cover rounded-lg border border-gray-200" />
-      <img v-else-if="currentImage" :src="`/storage/${currentImage}`" alt="Current" class="w-24 h-24 object-cover rounded-lg border border-gray-200" />
+      <img v-if="preview" :src="preview" alt="Preview" class="preview-img" />
+      <img v-else-if="currentImage" :src="`/storage/${currentImage}`" alt="Current" class="preview-img" />
       <div v-else class="w-24 h-24 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center text-gray-400 text-xs">
         No image
       </div>
@@ -29,3 +29,11 @@ function handleChange(e) {
   emit('change', file)
 }
 </script>
+
+<style scoped>
+@reference "../../css/app.css";
+
+.preview-img {
+  @apply w-24 h-24 object-cover rounded-lg border border-gray-200;
+}
+</style>

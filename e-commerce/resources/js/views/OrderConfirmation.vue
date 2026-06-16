@@ -8,7 +8,7 @@
     </div>
 
     <div v-else-if="status === 'paid'">
-      <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+      <div class="status-icon bg-green-100">
         <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
         </svg>
@@ -16,29 +16,20 @@
       <h1 class="text-2xl font-bold text-green-700">Order Confirmed!</h1>
       <p class="text-gray-500 mt-2">Order #{{ route.params.id }}</p>
       <div class="mt-8 flex gap-3 justify-center">
-        <router-link :to="`/orders/${route.params.id}`"
-          class="bg-blue-600 text-white px-6 py-2.5 rounded-md hover:bg-blue-700 font-medium">
-          View Order Details
-        </router-link>
-        <router-link to="/dashboard"
-          class="border border-gray-300 px-6 py-2.5 rounded-md hover:bg-gray-50 font-medium">
-          Continue Shopping
-        </router-link>
+        <router-link :to="`/orders/${route.params.id}`" class="btn-primary">View Order Details</router-link>
+        <router-link to="/dashboard" class="btn-secondary">Continue Shopping</router-link>
       </div>
     </div>
 
     <div v-else>
-      <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+      <div class="status-icon bg-red-100">
         <svg class="w-10 h-10 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </div>
       <h1 class="text-2xl font-bold text-red-700">Payment Failed</h1>
       <p class="text-gray-500 mt-2">Something went wrong processing your order.</p>
-      <router-link to="/cart"
-        class="mt-8 inline-block bg-blue-600 text-white px-6 py-2.5 rounded-md hover:bg-blue-700 font-medium">
-        Back to Cart
-      </router-link>
+      <router-link to="/cart" class="mt-8 inline-block btn-primary">Back to Cart</router-link>
     </div>
 
   </div>
@@ -78,3 +69,19 @@ onUnmounted(() => {
   clearInterval(pollInterval)
 })
 </script>
+
+<style scoped>
+@reference "../../css/app.css";
+
+.status-icon {
+  @apply w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6;
+}
+
+.btn-primary {
+  @apply bg-blue-600 text-white px-6 py-2.5 rounded-md hover:bg-blue-700 font-medium;
+}
+
+.btn-secondary {
+  @apply border border-gray-300 px-6 py-2.5 rounded-md hover:bg-gray-50 font-medium;
+}
+</style>

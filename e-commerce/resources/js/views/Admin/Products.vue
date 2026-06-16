@@ -2,23 +2,23 @@
   <div>
     <h1 class="text-2xl font-bold mb-6">All Products</h1>
 
-    <div v-if="loading" class="text-center py-16 text-gray-500">Loading...</div>
-    <div v-else class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div v-if="loading" class="state-message">Loading...</div>
+    <div v-else class="table-wrap">
       <table class="w-full text-sm">
         <thead class="bg-gray-50 border-b border-gray-200">
           <tr>
-            <th class="text-left px-4 py-3 font-medium text-gray-700">Name</th>
-            <th class="text-left px-4 py-3 font-medium text-gray-700">Seller</th>
-            <th class="text-left px-4 py-3 font-medium text-gray-700">Price</th>
+            <th class="th">Name</th>
+            <th class="th">Seller</th>
+            <th class="th">Price</th>
             <th class="px-4 py-3 w-20"></th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="product in products" :key="product.id" class="border-b border-gray-100 hover:bg-gray-50">
-            <td class="px-4 py-3 font-medium">{{ product.name }}</td>
-            <td class="px-4 py-3 text-gray-500">{{ product.seller?.name }}</td>
-            <td class="px-4 py-3">R$ {{ product.price }}</td>
-            <td class="px-4 py-3 text-right">
+          <tr v-for="product in products" :key="product.id" class="tr">
+            <td class="td font-medium">{{ product.name }}</td>
+            <td class="td text-gray-500">{{ product.seller?.name }}</td>
+            <td class="td">R$ {{ product.price }}</td>
+            <td class="td text-right">
               <button @click="handleDelete(product)"
                 class="text-xs bg-red-100 text-red-700 px-2.5 py-1 rounded hover:bg-red-200">Delete</button>
             </td>
@@ -59,3 +59,27 @@ async function handleDelete(product) {
 
 onMounted(fetchProducts)
 </script>
+
+<style scoped>
+@reference "../../../css/app.css";
+
+.state-message {
+  @apply text-center py-16 text-gray-500;
+}
+
+.table-wrap {
+  @apply bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden;
+}
+
+.th {
+  @apply text-left px-4 py-3 font-medium text-gray-700;
+}
+
+.tr {
+  @apply border-b border-gray-100 hover:bg-gray-50;
+}
+
+.td {
+  @apply px-4 py-3;
+}
+</style>
