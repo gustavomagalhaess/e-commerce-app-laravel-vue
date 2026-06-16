@@ -4,19 +4,16 @@
 
     <form @submit.prevent="handleSubmit" class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 space-y-4">
       <div>
-        <label class="block text-sm font-medium text-gray-700">Current Password</label>
-        <input v-model="form.current_password" type="password" required
-          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <label class="form-label">Current Password</label>
+        <input v-model="form.current_password" type="password" required class="input" />
       </div>
       <div>
-        <label class="block text-sm font-medium text-gray-700">New Password</label>
-        <input v-model="form.password" type="password" required minlength="8"
-          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <label class="form-label">New Password</label>
+        <input v-model="form.password" type="password" required minlength="8" class="input" />
       </div>
       <div>
-        <label class="block text-sm font-medium text-gray-700">Confirm New Password</label>
-        <input v-model="form.password_confirmation" type="password" required
-          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <label class="form-label">Confirm New Password</label>
+        <input v-model="form.password_confirmation" type="password" required class="input" />
       </div>
 
       <div v-if="errors.length" class="text-red-600 text-sm space-y-1">
@@ -25,8 +22,7 @@
       <p v-if="success" class="text-green-600 text-sm">Password updated successfully.</p>
 
       <div class="flex gap-3">
-        <button type="submit" :disabled="loading"
-          class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 font-medium">
+        <button type="submit" :disabled="loading" class="btn-primary">
           {{ loading ? 'Saving...' : 'Update Password' }}
         </button>
         <router-link to="/profile" class="px-6 py-2 rounded-md border border-gray-300 hover:bg-gray-50 text-sm">
@@ -66,3 +62,19 @@ async function handleSubmit() {
   }
 }
 </script>
+
+<style scoped>
+@reference "../../../css/app.css";
+
+.form-label {
+  @apply block text-sm font-medium text-gray-700;
+}
+
+.input {
+  @apply mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+.btn-primary {
+  @apply bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 font-medium;
+}
+</style>

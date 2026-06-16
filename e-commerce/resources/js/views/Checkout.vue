@@ -2,12 +2,12 @@
   <div class="max-w-md mx-auto">
     <h1 class="text-2xl font-bold mb-6">Checkout</h1>
 
-    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 mb-6">
+    <div class="card mb-6">
       <p class="text-lg font-semibold">Total: R$ {{ cartStore.total }}</p>
       <p class="text-sm text-gray-500 mt-1">{{ cartStore.itemCount }} item(s) in cart</p>
     </div>
 
-    <form @submit.prevent="handleSubmit" class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 space-y-4">
+    <form @submit.prevent="handleSubmit" class="card space-y-4">
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-3">Payment Method</label>
         <div class="space-y-3">
@@ -62,3 +62,11 @@ async function handleSubmit() {
   }
 }
 </script>
+
+<style scoped>
+@reference "../../css/app.css";
+
+.card {
+  @apply bg-white p-4 rounded-lg shadow-sm border border-gray-200;
+}
+</style>
