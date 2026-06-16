@@ -2,12 +2,13 @@
 
 namespace Database\Factories\Domains\Catalog\Models;
 
+use App\Domains\Catalog\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 class CategoryFactory extends Factory
 {
-    protected $model = \App\Domains\Catalog\Models\Category::class;
+    protected $model = Category::class;
 
     public function definition(): array
     {

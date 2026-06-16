@@ -33,7 +33,7 @@ class ProductCrudTest extends TestCase
             ->assertJsonFragment(['name' => 'Blue Widget'])
             ->assertJsonPath('data.categories.0.id', $category->id);
 
-        Storage::disk('public')->assertExists('products/' . basename($response->json('data.image_path')));
+        Storage::disk('public')->assertExists('products/'.basename($response->json('data.image_path')));
     }
 
     public function test_create_product_requires_authentication(): void

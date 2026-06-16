@@ -1,19 +1,19 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Domains\Auth\Http\Controllers\LoginController;
-use App\Domains\Auth\Http\Controllers\RegisterController;
-use App\Domains\Auth\Http\Controllers\LogoutController;
-use App\Domains\Auth\Http\Controllers\ProfileController;
-use App\Domains\Auth\Http\Controllers\PasswordController;
-use App\Domains\Catalog\Http\Controllers\ProductController;
-use App\Domains\Catalog\Http\Controllers\CategoryController;
-use App\Domains\Cart\Http\Controllers\CartController;
-use App\Domains\Orders\Http\Controllers\OrderController;
-use App\Domains\Orders\Http\Controllers\SalesController;
 use App\Domains\Admin\Http\Controllers\CategoryController as AdminCategoryController;
 use App\Domains\Admin\Http\Controllers\ProductController as AdminProductController;
 use App\Domains\Admin\Http\Controllers\UserController as AdminUserController;
+use App\Domains\Auth\Http\Controllers\LoginController;
+use App\Domains\Auth\Http\Controllers\LogoutController;
+use App\Domains\Auth\Http\Controllers\PasswordController;
+use App\Domains\Auth\Http\Controllers\ProfileController;
+use App\Domains\Auth\Http\Controllers\RegisterController;
+use App\Domains\Cart\Http\Controllers\CartController;
+use App\Domains\Catalog\Http\Controllers\CategoryController;
+use App\Domains\Catalog\Http\Controllers\ProductController;
+use App\Domains\Orders\Http\Controllers\OrderController;
+use App\Domains\Orders\Http\Controllers\SalesController;
+use Illuminate\Support\Facades\Route;
 
 // Public auth
 Route::post('/register', [RegisterController::class, '__invoke']);

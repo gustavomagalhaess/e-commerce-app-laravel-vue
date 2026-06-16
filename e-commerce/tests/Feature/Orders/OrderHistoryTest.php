@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Orders;
 
+use App\Domains\Catalog\Models\Product;
 use App\Domains\Orders\Models\Order;
 use App\Domains\Orders\Models\OrderItem;
-use App\Domains\Catalog\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

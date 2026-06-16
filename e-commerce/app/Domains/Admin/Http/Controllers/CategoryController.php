@@ -27,7 +27,7 @@ class CategoryController extends Controller
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'unique:categories,slug,' . $category->id],
+            'slug' => ['required', 'string', 'unique:categories,slug,'.$category->id],
         ]);
 
         return response()->json(['data' => $this->categoryRepo->update($category, $data)]);

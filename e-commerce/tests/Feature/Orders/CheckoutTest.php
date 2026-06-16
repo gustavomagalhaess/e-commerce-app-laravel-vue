@@ -6,6 +6,7 @@ use App\Domains\Cart\Models\CartItem;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Orders\Jobs\ProcessOrder;
 use App\Domains\Orders\Models\Order;
+use App\Domains\Orders\Services\OrderService;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Bus;
@@ -64,8 +65,8 @@ class CheckoutTest extends TestCase
             'total' => 0,
         ]);
 
-        (new \App\Domains\Orders\Jobs\ProcessOrder($order->id, $buyer->id))
-            ->handle(app(\App\Domains\Orders\Services\OrderService::class));
+        (new ProcessOrder($order->id, $buyer->id))
+            ->handle(app(OrderService::class));
 
         $order->refresh();
 
