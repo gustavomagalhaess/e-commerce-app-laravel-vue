@@ -24,8 +24,7 @@
           <div class="flex items-center gap-3">
             <input v-model.number="qty" type="number" min="1"
               class="w-20 border border-gray-300 rounded-md shadow-sm px-3 py-2 text-center" />
-            <button @click="handleAddToCart" :disabled="addingToCart"
-              class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 font-medium">
+            <button @click="handleAddToCart" :disabled="addingToCart" class="btn-primary">
               {{ addingToCart ? 'Adding...' : 'Add to Cart' }}
             </button>
           </div>
@@ -34,20 +33,14 @@
         </div>
 
         <div v-if="canEdit" class="mt-6 flex gap-3">
-          <router-link :to="`/products/${product.id}/edit`"
-            class="bg-gray-100 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-200 text-sm font-medium">
-            Edit
-          </router-link>
-          <button @click="handleDelete"
-            class="bg-red-100 text-red-700 px-4 py-2 rounded-md hover:bg-red-200 text-sm font-medium">
-            Delete
-          </button>
+          <router-link :to="`/products/${product.id}/edit`" class="btn-action">Edit</router-link>
+          <button @click="handleDelete" class="btn-action-danger">Delete</button>
         </div>
       </div>
     </div>
   </div>
-  <div v-else-if="loading" class="text-center py-16 text-gray-500">Loading...</div>
-  <div v-else class="text-center py-16 text-gray-500">Product not found.</div>
+  <div v-else-if="loading" class="state-message">Loading...</div>
+  <div v-else class="state-message">Product not found.</div>
 </template>
 
 <script setup>
@@ -105,3 +98,23 @@ async function handleDelete() {
   router.push('/my-products')
 }
 </script>
+
+<style scoped>
+@reference "../../../css/app.css";
+
+.state-message {
+  @apply text-center py-16 text-gray-500;
+}
+
+.btn-primary {
+  @apply bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 font-medium;
+}
+
+.btn-action {
+  @apply bg-gray-100 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-200 text-sm font-medium;
+}
+
+.btn-action-danger {
+  @apply bg-red-100 text-red-700 px-4 py-2 rounded-md hover:bg-red-200 text-sm font-medium;
+}
+</style>

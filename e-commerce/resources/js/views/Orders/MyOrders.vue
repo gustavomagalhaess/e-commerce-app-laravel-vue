@@ -2,11 +2,10 @@
   <div>
     <h1 class="text-2xl font-bold mb-6">My Orders</h1>
 
-    <div v-if="loading" class="text-center py-16 text-gray-500">Loading...</div>
-    <div v-else-if="orders.length === 0" class="text-center py-16 text-gray-500">No orders yet.</div>
+    <div v-if="loading" class="state-message">Loading...</div>
+    <div v-else-if="orders.length === 0" class="state-message">No orders yet.</div>
     <div v-else class="space-y-4">
-      <div v-for="order in orders" :key="order.id"
-        class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+      <div v-for="order in orders" :key="order.id" class="card">
         <div class="flex items-start justify-between">
           <div>
             <p class="font-semibold text-gray-900">Order #{{ order.id }}</p>
@@ -64,3 +63,15 @@ async function fetchOrders(page = 1) {
 
 onMounted(fetchOrders)
 </script>
+
+<style scoped>
+@reference "../../../css/app.css";
+
+.state-message {
+  @apply text-center py-16 text-gray-500;
+}
+
+.card {
+  @apply bg-white rounded-lg shadow-sm border border-gray-200 p-4;
+}
+</style>

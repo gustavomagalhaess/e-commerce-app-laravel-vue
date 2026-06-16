@@ -3,30 +3,25 @@
     <h1 class="text-2xl font-bold mb-6">Create Account</h1>
     <form @submit.prevent="handleSubmit" class="space-y-4 bg-white p-6 rounded-lg shadow-sm border border-gray-200">
       <div>
-        <label class="block text-sm font-medium text-gray-700">Name</label>
-        <input v-model="form.name" type="text" required
-          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <label class="form-label">Name</label>
+        <input v-model="form.name" type="text" required class="input" />
       </div>
       <div>
-        <label class="block text-sm font-medium text-gray-700">Email</label>
-        <input v-model="form.email" type="email" required
-          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <label class="form-label">Email</label>
+        <input v-model="form.email" type="email" required class="input" />
       </div>
       <div>
-        <label class="block text-sm font-medium text-gray-700">Password</label>
-        <input v-model="form.password" type="password" required minlength="8"
-          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <label class="form-label">Password</label>
+        <input v-model="form.password" type="password" required minlength="8" class="input" />
       </div>
       <div>
-        <label class="block text-sm font-medium text-gray-700">Confirm Password</label>
-        <input v-model="form.password_confirmation" type="password" required
-          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <label class="form-label">Confirm Password</label>
+        <input v-model="form.password_confirmation" type="password" required class="input" />
       </div>
       <div v-if="errors.length" class="text-red-600 text-sm space-y-1">
         <p v-for="e in errors" :key="e">{{ e }}</p>
       </div>
-      <button type="submit" :disabled="loading"
-        class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50 font-medium">
+      <button type="submit" :disabled="loading" class="btn-primary w-full">
         {{ loading ? 'Creating account...' : 'Register' }}
       </button>
     </form>
@@ -70,3 +65,19 @@ async function handleSubmit() {
   }
 }
 </script>
+
+<style scoped>
+@reference "../../../css/app.css";
+
+.form-label {
+  @apply block text-sm font-medium text-gray-700;
+}
+
+.input {
+  @apply mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+.btn-primary {
+  @apply bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50 font-medium;
+}
+</style>

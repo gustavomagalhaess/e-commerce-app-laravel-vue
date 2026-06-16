@@ -4,14 +4,14 @@
 
     <form @submit.prevent="handleSubmit" class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 space-y-4">
       <div>
-        <label class="block text-sm font-medium text-gray-700">Name</label>
+        <label class="form-label">Name</label>
         <input v-model="form.name" type="text" required
-          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          class="form-input" />
       </div>
       <div>
-        <label class="block text-sm font-medium text-gray-700">Email</label>
+        <label class="form-label">Email</label>
         <input v-model="form.email" type="email" required
-          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          class="form-input" />
       </div>
 
       <div v-if="errors.length" class="text-red-600 text-sm space-y-1">
@@ -69,3 +69,14 @@ async function handleSubmit() {
   }
 }
 </script>
+<style scoped>
+@reference "../../../css/app.css";
+
+.form-label {
+    @apply block text-sm font-medium text-gray-700;
+}
+
+.form-input {
+    @apply mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+</style>

@@ -2,36 +2,34 @@
   <div>
     <h1 class="text-2xl font-bold mb-6">My Sales</h1>
 
-    <div v-if="loading" class="text-center py-16 text-gray-500">Loading...</div>
-    <div v-else-if="sales.length === 0" class="text-center py-16 text-gray-500">No sales yet.</div>
-    <div v-else class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div v-if="loading" class="state-message">Loading...</div>
+    <div v-else-if="sales.length === 0" class="state-message">No sales yet.</div>
+    <div v-else class="table-wrap">
       <table class="w-full text-sm">
         <thead class="bg-gray-50 border-b border-gray-200">
           <tr>
-            <th class="text-left px-4 py-3 font-medium text-gray-700">Product</th>
-            <th class="text-left px-4 py-3 font-medium text-gray-700">Buyer</th>
-            <th class="text-left px-4 py-3 font-medium text-gray-700">Qty</th>
-            <th class="text-left px-4 py-3 font-medium text-gray-700">Unit Price</th>
-            <th class="text-left px-4 py-3 font-medium text-gray-700">Total</th>
-            <th class="text-left px-4 py-3 font-medium text-gray-700">Status</th>
-            <th class="text-left px-4 py-3 font-medium text-gray-700">Date</th>
+            <th class="th">Product</th>
+            <th class="th">Buyer</th>
+            <th class="th">Qty</th>
+            <th class="th">Unit Price</th>
+            <th class="th">Total</th>
+            <th class="th">Status</th>
+            <th class="th">Date</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="sale in sales" :key="sale.id" class="border-b border-gray-100 hover:bg-gray-50">
-            <td class="px-4 py-3 font-medium">{{ sale.product?.name }}</td>
-            <td class="px-4 py-3 text-gray-600">{{ sale.order?.buyer?.name }}</td>
-            <td class="px-4 py-3">{{ sale.quantity }}</td>
-            <td class="px-4 py-3">R$ {{ sale.price_at_purchase }}</td>
-            <td class="px-4 py-3 font-semibold">
-              R$ {{ (sale.quantity * parseFloat(sale.price_at_purchase)).toFixed(2) }}
-            </td>
-            <td class="px-4 py-3">
+          <tr v-for="sale in sales" :key="sale.id" class="tr">
+            <td class="td font-medium">{{ sale.product?.name }}</td>
+            <td class="td text-gray-600">{{ sale.order?.buyer?.name }}</td>
+            <td class="td">{{ sale.quantity }}</td>
+            <td class="td">R$ {{ sale.price_at_purchase }}</td>
+            <td class="td font-semibold">R$ {{ (sale.quantity * parseFloat(sale.price_at_purchase)).toFixed(2) }}</td>
+            <td class="td">
               <span :class="statusClass(sale.order?.status)" class="text-xs font-medium px-2 py-0.5 rounded-full">
                 {{ sale.order?.status }}
               </span>
             </td>
-            <td class="px-4 py-3 text-gray-500">{{ new Date(sale.created_at).toLocaleDateString('pt-BR') }}</td>
+            <td class="td text-gray-500">{{ new Date(sale.created_at).toLocaleDateString('pt-BR') }}</td>
           </tr>
         </tbody>
       </table>
@@ -73,3 +71,27 @@ async function fetchSales(page = 1) {
 
 onMounted(fetchSales)
 </script>
+
+<style scoped>
+@reference "../../css/app.css";
+
+.state-message {
+  @apply text-center py-16 text-gray-500;
+}
+
+.table-wrap {
+  @apply bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden;
+}
+
+.th {
+  @apply text-left px-4 py-3 font-medium text-gray-700;
+}
+
+.tr {
+  @apply border-b border-gray-100 hover:bg-gray-50;
+}
+
+.td {
+  @apply px-4 py-3;
+}
+</style>

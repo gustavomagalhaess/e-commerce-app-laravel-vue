@@ -10,7 +10,7 @@
     <div v-else>
       <div class="space-y-3 mb-6">
         <div v-for="item in cartStore.items" :key="item.id"
-          class="flex items-center gap-4 bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+          class="card flex items-center gap-4">
           <img v-if="item.product?.image_path"
             :src="`/storage/${item.product.image_path}`"
             :alt="item.product.name"
@@ -27,12 +27,12 @@
           <div class="flex items-center gap-2 flex-shrink-0">
             <button @click="cartStore.updateQty(item.id, item.quantity - 1)"
               :disabled="item.quantity <= 1"
-              class="w-8 h-8 border border-gray-300 rounded text-lg leading-none hover:bg-gray-100 disabled:opacity-40">
+              class="qty-btn disabled:opacity-40">
               −
             </button>
             <span class="w-8 text-center font-medium">{{ item.quantity }}</span>
             <button @click="cartStore.updateQty(item.id, item.quantity + 1)"
-              class="w-8 h-8 border border-gray-300 rounded text-lg leading-none hover:bg-gray-100">
+              class="qty-btn">
               +
             </button>
           </div>
@@ -48,7 +48,7 @@
         </div>
       </div>
 
-      <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 flex items-center justify-between">
+      <div class="card flex items-center justify-between">
         <div>
           <p class="text-xl font-bold">Total: R$ {{ cartStore.total }}</p>
           <p class="text-sm text-gray-500">{{ cartStore.itemCount }} item(s)</p>
@@ -70,3 +70,15 @@ import { useCartStore } from '../stores/cart'
 
 const cartStore = useCartStore()
 </script>
+
+<style scoped>
+@reference "../../css/app.css";
+
+.card {
+  @apply bg-white p-4 rounded-lg shadow-sm border border-gray-200;
+}
+
+.qty-btn {
+  @apply w-8 h-8 border border-gray-300 rounded text-lg leading-none hover:bg-gray-100;
+}
+</style>
