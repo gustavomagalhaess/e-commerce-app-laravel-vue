@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Cart\Http\Controllers;
 
 use App\Domains\Cart\Services\CartService;
@@ -10,7 +12,7 @@ use Illuminate\Http\Response;
 
 class CartController extends Controller
 {
-    public function __construct(private CartService $cartService) {}
+    public function __construct(private readonly CartService $cartService) {}
 
     public function index(Request $request): JsonResponse
     {

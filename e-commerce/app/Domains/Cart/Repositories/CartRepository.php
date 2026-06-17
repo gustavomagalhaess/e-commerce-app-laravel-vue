@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Cart\Repositories;
 
 use App\Domains\Cart\Models\CartItem;
+use App\Domains\Cart\Repositories\Contracts\CartRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
-class CartRepository
+class CartRepository implements CartRepositoryInterface
 {
     public function getByUser(int $userId): Collection
     {

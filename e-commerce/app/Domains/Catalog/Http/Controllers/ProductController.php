@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Catalog\Http\Controllers;
 
 use App\Domains\Catalog\Http\Requests\StoreProductRequest;
-use App\Domains\Catalog\Repositories\ProductRepository;
 use App\Domains\Catalog\Services\ProductService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
@@ -13,14 +14,11 @@ use Illuminate\Support\Facades\Gate;
 
 class ProductController extends Controller
 {
-    public function __construct(
-        private ProductRepository $productRepo,
-        private ProductService $productService,
-    ) {}
+    public function __construct(private readonly ProductService $productService) {}
 
     public function index(Request $request): JsonResponse
     {
-        $paginator = $this->productRepo->paginate(
+        $paginator = $this->productService->paginate(
             search: $request->string('search')->toString(),
             categoryIds: (array) $request->input('category', []),
         );
@@ -38,7 +36,7 @@ class ProductController extends Controller
 
     public function show(int $id): JsonResponse
     {
-        $product = $this->productRepo->findById($id);
+        $product = $this->productService->findById($id);
 
         return response()->json(['data' => $product]);
     }
@@ -57,7 +55,7 @@ class ProductController extends Controller
 
     public function update(Request $request, int $id): JsonResponse
     {
-        $product = $this->productRepo->findById($id);
+        $product = $this->productService->findById($id);
         Gate::authorize('update', $product);
 
         $data = $request->validate([
@@ -81,7 +79,7 @@ class ProductController extends Controller
 
     public function destroy(int $id): Response
     {
-        $product = $this->productRepo->findById($id);
+        $product = $this->productService->findById($id);
         Gate::authorize('delete', $product);
         $this->productService->delete($product);
 

@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Catalog\Services;
 
 use App\Domains\Catalog\Models\Product;
-use App\Domains\Catalog\Repositories\ProductRepository;
+use App\Domains\Catalog\Repositories\Contracts\ProductRepositoryInterface;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\UploadedFile;
@@ -11,13 +13,23 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductService
 {
-    public function __construct(private ProductRepository $productRepo) {}
+    public function __construct(private readonly ProductRepositoryInterface $productRepository) {}
+
+    public function paginate(string $search = '', array $categoryIds = [], int $perPage = 12): LengthAwarePaginator
+    {
+        return $this->productRepository->paginate($search, $categoryIds, $perPage);
+    }
+
+    public function findById(int $id): Product
+    {
+        return $this->productRepository->findById($id);
+    }
 
     public function create(User $seller, array $data, array $categoryIds, ?UploadedFile $image): Product
     {
         $imagePath = $image ? $image->store('products', 'public') : null;
 
-        return $this->productRepo->create([
+        return $this->productRepository->create([
             'seller_id' => $seller->id,
             'name' => $data['name'],
             'description' => $data['description'],
@@ -35,7 +47,7 @@ class ProductService
             $data['image_path'] = $image->store('products', 'public');
         }
 
-        return $this->productRepo->update($product, $data, $categoryIds);
+        return $this->productRepository->update($product, $data, $categoryIds);
     }
 
     public function delete(Product $product): void
@@ -43,11 +55,11 @@ class ProductService
         if ($product->image_path) {
             Storage::disk('public')->delete($product->image_path);
         }
-        $this->productRepo->delete($product);
+        $this->productRepository->delete($product);
     }
 
     public function myProducts(int $sellerId): LengthAwarePaginator
     {
-        return $this->productRepo->findBySellerWithPaginate($sellerId);
+        return $this->productRepository->findBySellerWithPaginate($sellerId);
     }
 }

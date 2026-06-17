@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Catalog\Repositories;
 
 use App\Domains\Catalog\Models\Category;
+use App\Domains\Catalog\Repositories\Contracts\CategoryRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
-class CategoryRepository
+class CategoryRepository implements CategoryRepositoryInterface
 {
     public function all(): Collection
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Auth\Http\Controllers;
 
 use App\Domains\Auth\Services\AuthService;
@@ -9,7 +11,7 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    public function __construct(private AuthService $authService) {}
+    public function __construct(private readonly AuthService $authService) {}
 
     public function __invoke(Request $request): JsonResponse
     {

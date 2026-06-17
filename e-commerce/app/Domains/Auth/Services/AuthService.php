@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Auth\Services;
 
-use App\Domains\Auth\Repositories\UserRepository;
+use App\Domains\Auth\Repositories\Contracts\UserRepositoryInterface;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -10,11 +12,11 @@ use Illuminate\Validation\ValidationException;
 
 class AuthService
 {
-    public function __construct(private UserRepository $userRepo) {}
+    public function __construct(private readonly UserRepositoryInterface $userRepository) {}
 
     public function register(array $data): array
     {
-        $user = $this->userRepo->create([
+        $user = $this->userRepository->create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
@@ -47,11 +49,11 @@ class AuthService
 
     public function updateProfile(User $user, array $data): User
     {
-        return $this->userRepo->update($user, $data);
+        return $this->userRepository->update($user, $data);
     }
 
     public function updatePassword(User $user, string $newPassword): void
     {
-        $this->userRepo->update($user, ['password' => Hash::make($newPassword)]);
+        $this->userRepository->update($user, ['password' => Hash::make($newPassword)]);
     }
 }

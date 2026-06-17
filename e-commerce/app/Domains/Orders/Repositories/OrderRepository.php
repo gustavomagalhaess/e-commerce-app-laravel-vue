@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Orders\Repositories;
 
 use App\Domains\Orders\Models\Order;
 use App\Domains\Orders\Models\OrderItem;
+use App\Domains\Orders\Repositories\Contracts\OrderRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-class OrderRepository
+class OrderRepository implements OrderRepositoryInterface
 {
     public function create(array $data): Order
     {

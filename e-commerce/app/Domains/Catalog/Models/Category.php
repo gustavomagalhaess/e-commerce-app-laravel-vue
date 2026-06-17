@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Catalog\Models;
 
 use Database\Factories\Domains\Catalog\Models\CategoryFactory;

@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Catalog\Repositories;
 
 use App\Domains\Catalog\Models\Product;
+use App\Domains\Catalog\Repositories\Contracts\ProductRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-class ProductRepository
+class ProductRepository implements ProductRepositoryInterface
 {
     public function paginate(string $search = '', array $categoryIds = [], int $perPage = 12): LengthAwarePaginator
     {
