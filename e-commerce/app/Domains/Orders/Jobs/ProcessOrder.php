@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Orders\Jobs;
 
 use App\Domains\Orders\Services\OrderService;

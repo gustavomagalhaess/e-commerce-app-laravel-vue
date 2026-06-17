@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Catalog\Policies;
 
 use App\Domains\Catalog\Models\Product;

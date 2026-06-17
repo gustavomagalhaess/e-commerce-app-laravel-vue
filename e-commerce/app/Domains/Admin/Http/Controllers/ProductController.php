@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Admin\Http\Controllers;
 
 use App\Domains\Catalog\Models\Product;
-use App\Domains\Catalog\Repositories\ProductRepository;
 use App\Domains\Catalog\Services\ProductService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
@@ -11,14 +12,11 @@ use Illuminate\Http\Response;
 
 class ProductController extends Controller
 {
-    public function __construct(
-        private ProductRepository $productRepo,
-        private ProductService $productService,
-    ) {}
+    public function __construct(private readonly ProductService $productService) {}
 
     public function index(): JsonResponse
     {
-        return response()->json($this->productRepo->paginate());
+        return response()->json($this->productService->paginate());
     }
 
     public function destroy(Product $product): Response
